@@ -37,8 +37,8 @@ export async function POST(request: NextRequest) {
       data: { 
         caixaId, 
         usuarioId: usuarioId || null, // Permite ser null
-        nomeSolicitante: nomeSolicitante || null, // Salva o nome livre
-        tipo, 
+        // nomeSolicitante: nomeSolicitante || null, // Desativado pois não existe no banco
+        tipo,
         motivo, 
         localEntrega, 
         prazoHoras, 
