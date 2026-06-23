@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
       distinct: ['nomeDocumento'],
       orderBy: { nomeDocumento: 'asc' },
     })
-    const tipos = docs.map(d => d.nomeDocumento).filter(Boolean)
+    const tipos = docs.map((d: any) => d.nomeDocumento).filter(Boolean)
     return NextResponse.json({ tipos })
   }
 
