@@ -16,7 +16,7 @@ export async function GET() {
       // para descobrir quais são os tipos de documentos e quais os campos JSON (metadata) deles.
       prisma.documento.findMany({
         select: { setorId: true, nomeDocumento: true, metadata: true },
-        where: { nomeDocumento: { not: null, not: '' } }
+        where: { AND: [{ nomeDocumento: { not: null } }, { nomeDocumento: { not: '' } }] }
       })
     ])
 
