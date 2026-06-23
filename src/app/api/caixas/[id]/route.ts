@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
   try {
+    const params = await props.params
     const { etiqueta, clienteId, enderecoCodigo, observacao, status } = await request.json()
 
     let enderecoId: string | undefined | null = undefined
@@ -43,7 +44,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
   await prisma.caixa.delete({ where: { id: params.id } })
   return NextResponse.json({ ok: true })
 }
