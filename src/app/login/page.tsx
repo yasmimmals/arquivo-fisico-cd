@@ -16,19 +16,31 @@ export default function LoginPage() {
     setCarregando(true)
 
     try {
-      // Simulação do login para vermos a tela funcionando
-      console.log('Tentando logar com:', email, senha)
-      
-      setTimeout(() => {
-        router.push('/dashboard')
-      }, 1000)
+      // Bate na porta do Porteiro (API)
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+      })
+
+      const data = await res.json()
+
+      // Se o porteiro barrou (senha errada, etc)
+      if (!res.ok) {
+        setErro(data.error || 'Erro ao fazer login')
+        setCarregando(false)
+        return
+      }
+
+      // Se deu tudo certo, a API já colou o crachá no navegador. Entra no sistema!
+      router.push('/dashboard')
+      router.refresh() 
 
     } catch (error) {
-      setErro('E-mail ou senha incorretos.')
+      setErro('Sem conexão com o servidor.')
       setCarregando(false)
     }
   }
-
   return (
     <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', background: '#f8fafc', fontFamily: 'Inter, system-ui, sans-serif' }}>
       
