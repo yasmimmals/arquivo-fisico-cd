@@ -53,7 +53,7 @@ export async function POST() {
             tempGuardaAnos: 5, 
             ativo: true,
             campos: {
-              create: arrayCampos // AQUI ESTÁ A CORREÇÃO!
+              create: arrayCampos as any
             }
           }
         })
