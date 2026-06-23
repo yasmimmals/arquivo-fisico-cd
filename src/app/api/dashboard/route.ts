@@ -75,7 +75,7 @@ export async function GET() {
     where: { id: { in: clienteIds } },
     select: { id: true, nome: true },
   })
-  const clienteMap = Object.fromEntries(clientes.map(c => [c.id, c.nome]))
+  const clienteMap = Object.fromEntries(clientes.map((c: any) => [c.id, c.nome]))
 
   // Ocupação real por corredor (com caixa)
   const enderecosOcupados = await prisma.endereco.groupBy({
@@ -83,9 +83,9 @@ export async function GET() {
     where: { caixa: { isNot: null } },
     _count: { id: true },
   })
-  const ocupadosMap = Object.fromEntries(enderecosOcupados.map(e => [e.corredor, e._count.id]))
+  const ocupadosMap = Object.fromEntries(enderecosOcupados.map((e: any) => [e.corredor, e._count.id]))
 
-  const ocupacao = ocupacaoPorCorredor.map(e => ({
+  const ocupacao = ocupacaoPorCorredor.map((e: any) => ({
     corredor: `Corredor ${e.corredor}`,
     total: e._count.id,
     ocupados: ocupadosMap[e.corredor] || 0,
@@ -95,8 +95,8 @@ export async function GET() {
 
   return NextResponse.json({
     resumo: { totalCaixas, caixasAtivas, caixasRetiradas, totalDocumentos, totalSolicitacoes, solicitacoesPendentes, solicitacoesUrgentes, caixasProximasExpurgo },
-    caixasPorCliente: caixasPorCliente.map(c => ({ nome: clienteMap[c.clienteId] || 'Desconhecido', total: c._count.id })),
-    solicitacoesPorStatus: solicitacoesPorStatus.map(s => ({ status: s.status, total: s._count.id })),
+    caixasPorCliente: caixasPorCliente.map((c: any) => ({ nome: clienteMap[c.clienteId] || 'Desconhecido', total: c._count.id })),
+    solicitacoesPorStatus: solicitacoesPorStatus.map((s: any) => ({ status: s.status, total: s._count.id })),
     ocupacao,
     ultimasSolicitacoes,
   })
