@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       })
 
       // Filtra no JS pelos campos do metadata
-      const filtered = allDocs.filter(doc => {
+      const filtered = allDocs.filter((doc: any) => {
         const meta = doc.metadata as Record<string, any>
         return metaConditions.every(([k, v]) => {
           const val = meta?.[k]
