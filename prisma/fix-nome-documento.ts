@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from '../src/generated/prisma/client'
+import { PrismaClient } from '@prisma/client'
 import pg from 'pg'
 import fs from 'fs'
 import path from 'path'
