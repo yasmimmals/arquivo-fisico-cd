@@ -70,7 +70,7 @@ export async function GET() {
   ])
 
   // Buscar nomes dos clientes
-  const clienteIds = caixasPorCliente.map(c => c.clienteId)
+  const clienteIds = caixasPorCliente.map((c: any) => c.clienteId)
   const clientes = await prisma.cliente.findMany({
     where: { id: { in: clienteIds } },
     select: { id: true, nome: true },
